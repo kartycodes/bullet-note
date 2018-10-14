@@ -2,19 +2,8 @@
 
 [@bs.module] external logo : string = "./logo.svg";
 
-type state = {
-  weather : WeatherData.weather
-}; 
-
-type action = 
-  |  WeatherLoaded(WeatherData.weather); 
 
 let component = ReasonReact.statelessComponent("App");
-
-let dummyWeather: WeatherData.weather = {
-  summary: "Warm throughout the day",
-  temp : 30.5
-}
 
 let make = (~message, _children) => {
   ...component,
