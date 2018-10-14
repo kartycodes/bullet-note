@@ -1,6 +1,0 @@
-type bullet = {
-    text: string
-};
-
-
-
