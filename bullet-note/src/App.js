@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import BulletEditor from './components/TextArea.js';
+import BulletEditor from './components/BulletEditor.js';
 
 class App extends Component {
+
+  onNewLineEntered() {
+    alert("a new line was entered");
+  }
+
   render() {
     return (
-      <BulletEditor />
+      <BulletEditor onNewLineEntered={this.onNewLineEntered}/>
     );
   }
 }
