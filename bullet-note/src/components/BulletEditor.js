@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Editor, EditorState} from 'draft-js';
+import {Editor, EditorState, CompositeDecorator} from 'draft-js';
+import RegexSpanDecorator from './RegexSpanDecorator.js';
 
 const divStyle = {
     border : "1px solid gray",
@@ -17,8 +18,14 @@ class BulletEditor extends React.Component {
     
     constructor(props) {
         super(props);
+        
+        var decorators = new CompositeDecorator([
+            new RegexSpanDecorator(/(?<=\*)(\w|\s)*(?=\*)/g, {fontWeight: "bold"}),
+            new RegexSpanDecorator(/(?<=_)(\w|\s)*(?=_)/g, {fontStyle: "italic"} )
+        ])
+        
         this.state = {
-            editorState: EditorState.createEmpty(),
+            editorState: EditorState.createEmpty(decorators),
             lineState : Empty
         };
         this.onEditorStateChanged = this.onEditorStateChanged.bind(this);
@@ -57,13 +64,6 @@ class BulletEditor extends React.Component {
             </div>
         );
     }
-
-    // componentDidUpdate() {
-    //     if (this.state.newLine === true &&
-    //         this.state.editorState.getLastChangeType() === "split-block") {
-    //             this.setState({enteredNewLine: false});
-    //         }
-    // }
 }
 
 export default BulletEditor;
