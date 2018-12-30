@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {Editor, EditorState, CompositeDecorator} from 'draft-js';
 import RegexSpanDecorator from './RegexSpanDecorator.js';
 
@@ -9,10 +8,6 @@ const divStyle = {
     margin : "10px",
     padding : "50px"
   }
-
-const Empty = Symbol('empty');
-const NewLine = Symbol('newLine');
-const Typing = Symbol('typing');
 
 class BulletEditor extends React.Component {
     
@@ -26,43 +21,31 @@ class BulletEditor extends React.Component {
         
         this.state = {
             editorState: EditorState.createEmpty(decorators),
-            lineState : Empty
         };
         this.onEditorStateChanged = this.onEditorStateChanged.bind(this);
+        this.onReturnKeyPressed = this.onReturnKeyPressed.bind(this);
     }
 
     onEditorStateChanged(editorState) {
-        switch(this.state.lineState) {
-            case Empty: 
-                if (editorState.getLastChangeType() === "insert-characters") {
-                    this.setState({lineState : Typing});
-                }
-                break;
-            
-            case Typing: 
-                if (editorState.getLastChangeType() === "split-block") {
-                    this.setState({lineState : NewLine});
-                    this.props.onNewLineEntered();
-                }
-                break;
-            case NewLine: 
-                if (editorState.getLastChangeType() === "insert-characters") {
-                    this.setState({lineState : Typing});
-                }
-                break;
-        }
-    
-         this.setState({editorState: editorState});
-        
+        this.setState({editorState: editorState});
     }
 
+    detectHeading1() {
+
+    }
     render() {
         return (
             <div style={divStyle}>
                 <Editor editorState={this.state.editorState} 
-                    onChange={this.onEditorStateChanged} />
+                    onChange={this.onEditorStateChanged}
+                    handleReturn={this.onReturnKeyPressed} />
             </div>
         );
+    }
+
+    onReturnKeyPressed(e, editorState) {
+        this.props.onNewLineEntered();
+        return 'not-handled'; // as required by draft
     }
 }
 
