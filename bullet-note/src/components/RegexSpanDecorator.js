@@ -5,21 +5,16 @@ export default class RegexSpanDecorator {
         this.regex = regex;
         this.style = style
         this.strategy = this.strategy.bind(this);
-        this.findWithRegex = this.findWithRegex.bind(this);
         this.component = this.component.bind(this);
     }
 
-    findWithRegex(contentBlock, callback) {
+    strategy(contentBlock, callback, contentState) {
         const text = contentBlock.getText();
         let matchArr, start;
         while ((matchArr = this.regex.exec(text)) !== null) {
          start = matchArr.index;
          callback(start, start + matchArr[0].length);
         }
-    }
-
-    strategy(contentBlock, callback, contentState) {
-        this.findWithRegex(contentBlock, callback);
     }
 
     component(props) {

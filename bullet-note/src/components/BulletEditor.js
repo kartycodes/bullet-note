@@ -1,6 +1,8 @@
 import React from 'react';
 import {Editor, EditorState, CompositeDecorator} from 'draft-js';
 import RegexSpanDecorator from './RegexSpanDecorator.js';
+import detectHeadings from './DetectHeadings.js';
+import resetBlockStyle from './ResetBlockStyle.js';
 
 const divStyle = {
     border : "1px solid gray",
@@ -9,16 +11,14 @@ const divStyle = {
     padding : "50px"
   }
 
+const decorators = new CompositeDecorator([
+    new RegexSpanDecorator(/(?<=\*)\w.*\w(?=\*)/g, {fontWeight: "bold"}),
+    new RegexSpanDecorator(/(?<=_)(\w|\s)*(?=_)/g, {fontStyle: "italic"} )
+]);
+
 class BulletEditor extends React.Component {
-    
     constructor(props) {
         super(props);
-        
-        var decorators = new CompositeDecorator([
-            new RegexSpanDecorator(/(?<=\*)(\w|\s)*(?=\*)/g, {fontWeight: "bold"}),
-            new RegexSpanDecorator(/(?<=_)(\w|\s)*(?=_)/g, {fontStyle: "italic"} )
-        ])
-        
         this.state = {
             editorState: EditorState.createEmpty(decorators),
         };
@@ -27,12 +27,13 @@ class BulletEditor extends React.Component {
     }
 
     onEditorStateChanged(editorState) {
-        this.setState({editorState: editorState});
+        var updatedState = detectHeadings(editorState);
+        if (editorState.getLastChangeType() === "split-block") {
+            updatedState = resetBlockStyle(updatedState);
+        }
+        this.setState({editorState: updatedState});
     }
-
-    detectHeading1() {
-
-    }
+    
     render() {
         return (
             <div style={divStyle}>
