@@ -12,8 +12,9 @@ const divStyle = {
   }
 
 const decorators = new CompositeDecorator([
-    new RegexSpanDecorator(/(?<=\*)\w.*\w(?=\*)/g, {fontWeight: "bold"}),
-    new RegexSpanDecorator(/(?<=_)(\w|\s)*(?=_)/g, {fontStyle: "italic"} )
+    new RegexSpanDecorator(/\*.*?\*/g, {fontWeight: "bold"}),
+    new RegexSpanDecorator(/_.*?_/g, {fontStyle: "italic"} ),
+    new RegexSpanDecorator(/\~.*?\~/g, {textDecoration: "line-through"})
 ]);
 
 class BulletEditor extends React.Component {
