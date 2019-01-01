@@ -36,10 +36,8 @@ export default function detectHeadings(editorState) {
         if (count > 0) {
             var newBlockMap = contentState.getBlockMap().merge(updatedBlocks);
             var updatedContentState = contentState.set('blockMap', newBlockMap);
-            var newEditorState = EditorState.set(editorState, { currentContent : updatedContentState});
-            return newEditorState;
+            editorState = EditorState.set(editorState, { currentContent : updatedContentState});
         }
-        else {
-            return editorState;
-        }
+        
+        return editorState;
     };
