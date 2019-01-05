@@ -1,7 +1,6 @@
 import {EditorState} from 'draft-js'
 
 export default function resetBlockStyle(editorState) {
-               
         var sel = editorState.getSelection();
         var currentBlockKey = sel.getStartKey();
         var currentContent = editorState.getCurrentContent();

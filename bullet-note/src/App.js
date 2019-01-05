@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import BulletEditor from './components/BulletEditor.js';
+import BulletEditor from './components/Editor/BulletEditor.js';
+import Nav from './components/Nav.js';
 
 class App extends Component {
 
-  onNewLineEntered() {
-    alert("a new line was entered");
-  }
-
   render() {
     return (
-      <BulletEditor onNewLineEntered={this.onNewLineEntered}/>
+      <div className="container">
+        <Nav />
+        <BulletEditor />
+      </div>
     );
   }
 }

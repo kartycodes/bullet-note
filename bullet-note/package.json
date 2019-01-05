@@ -4,10 +4,15 @@
   "private": true,
   "dependencies": {
     "@types/draft-js": "^0.10.27",
+    "chai": "^4.2.0",
     "draft-js": "^0.10.5",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
+    "mocha": "^5.2.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-scripts": "2.0.4"
+    "react-scripts": "2.0.4",
+    "sinon": "^7.2.2"
   },
   "scripts": {
     "start": "react-scripts start",

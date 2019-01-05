@@ -6,15 +6,12 @@ import resetBlockStyle from './ResetBlockStyle.js';
 
 const divStyle = {
     border : "1px solid gray",
-    width  : "600px",
-    margin : "10px",
-    padding : "50px"
   }
 
 const decorators = new CompositeDecorator([
     new RegexSpanDecorator(/\*.*?\*/g, {fontWeight: "bold"}),
     new RegexSpanDecorator(/_.*?_/g, {fontStyle: "italic"} ),
-    new RegexSpanDecorator(/\~.*?\~/g, {textDecoration: "line-through"})
+    new RegexSpanDecorator(/~.*?~/g, {textDecoration: "line-through"})
 ]);
 
 class BulletEditor extends React.Component {
@@ -37,7 +34,7 @@ class BulletEditor extends React.Component {
     
     render() {
         return (
-            <div style={divStyle}>
+            <div className="editor" style={divStyle}>
                 <Editor editorState={this.state.editorState} 
                     onChange={this.onEditorStateChanged}
                     handleReturn={this.onReturnKeyPressed} />
@@ -46,7 +43,9 @@ class BulletEditor extends React.Component {
     }
 
     onReturnKeyPressed(e, editorState) {
-        this.props.onNewLineEntered();
+        if (this.props.onNewLineEntered) {
+            this.props.onNewLineEntered();
+        }
         return 'not-handled'; // as required by draft
     }
 }

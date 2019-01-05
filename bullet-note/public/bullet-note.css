@@ -1,0 +1,14 @@
+.container {
+    width: 100%;
+    overflow: hidden;
+}
+
+.nav {
+    width: 200px;
+    height: 100%;
+    float: left;
+}
+
+.editor {
+     margin-left: 250;
+}
